@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 
-import modelo.Aluno;
+import modelo.AlunoJDBC;
 
 public class TesteJDBC {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
@@ -20,7 +20,7 @@ public class TesteJDBC {
 		conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/teste", "teste", "teste");
 		stm = conn.prepareStatement("INSERT INTO ALUNOS(NOME, DATA_MATRICULA, ENDERECO) VALUES(?, ?, ?)");
 
-		Aluno aluno1 = new Aluno("Joao", LocalDate.now(), "Rua Matacavalos, 10");
+		AlunoJDBC aluno1 = new AlunoJDBC("Joao", LocalDate.now(), "Rua Matacavalos, 10");
 		
 		stm.setString(1, aluno1.getNome());
 		stm.setDate(2, Date.valueOf(aluno1.getDataMatricula()));
@@ -41,7 +41,7 @@ public class TesteJDBC {
 //			System.out.println(dataMatricula);
 			LocalDate dataMat = dataMatricula.toLocalDate();
 			
-			System.out.println(new Aluno(nome, dataMat, endereco));
+			System.out.println(new AlunoJDBC(nome, dataMat, endereco));
 		}
 	}
 }

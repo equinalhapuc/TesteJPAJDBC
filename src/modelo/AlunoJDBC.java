@@ -2,20 +2,20 @@ package modelo;
 
 import java.time.LocalDate;
 
-public class Aluno {
+public class AlunoJDBC {
 	private int matricula;
 	private String nome;
 	private LocalDate dataMatricula;
 	private String endereco;
 	
-	public Aluno(String nome, LocalDate dataMatricula, String endereco) {
+	public AlunoJDBC(String nome, LocalDate dataMatricula, String endereco) {
 		super();
 		this.nome = nome;
 		this.dataMatricula = dataMatricula;
 		this.endereco = endereco;
 	}
 		
-	public Aluno() {
+	public AlunoJDBC() {
 	
 	}
 
