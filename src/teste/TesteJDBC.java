@@ -33,10 +33,10 @@ public class TesteJDBC {
 			Date dataMatricula = rs.getDate("data_matricula");
 			String endereco = rs.getString("endereco");
 			
-			System.out.println(dataMatricula);
-			// LocalDate dataMat = LocalDate.of((int)dataMatricula.getYear(), (int)dataMatricula.getMonth(), (int)dataMatricula.getDay());
+//			System.out.println(dataMatricula);
+			LocalDate dataMat = dataMatricula.toLocalDate();
 			
-			// System.out.println(new Aluno(nome, dataMat, endereco));
+			System.out.println(new Aluno(nome, dataMat, endereco));
 		}
 	}
 }
