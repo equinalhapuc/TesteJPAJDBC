@@ -1,47 +1,28 @@
 package teste;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.List;
 
+import DAO.AlunoDAO;
 import modelo.AlunoJDBC;
+import utilJDBC.ConnectionFactory;
 
 public class TesteJDBC {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		Connection conn = null;
-		PreparedStatement stm = null;
+		Connection conn = ConnectionFactory.getConnection();
 		
-		Class.forName("org.postgresql.Driver");
-		conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/teste", "teste", "teste");
-		stm = conn.prepareStatement("INSERT INTO ALUNOS(NOME, DATA_MATRICULA, ENDERECO) VALUES(?, ?, ?)");
-
-		AlunoJDBC aluno1 = new AlunoJDBC("Joao", LocalDate.now(), "Rua Matacavalos, 10");
+		AlunoJDBC aluno1 = new AlunoJDBC("Patricia", LocalDate.now(), "Rua dos Borracheiros, 15");
+		AlunoDAO alunoDao = new AlunoDAO(conn);
 		
-		stm.setString(1, aluno1.getNome());
-		stm.setDate(2, Date.valueOf(aluno1.getDataMatricula()));
-		stm.setString(3, aluno1.getEndereco());
-	
-		System.out.println(stm.executeUpdate());
+		alunoDao.salvar(aluno1);
 			
-		Statement stm2 = conn.createStatement();
-		String sql = "SELECT * FROM ALUNOS";
-		ResultSet rs = stm2.executeQuery(sql);
+		List<AlunoJDBC> alunos = alunoDao.buscar("Joao");
 		
-		while (rs.next()) {
-			int mat = rs.getInt("matricula");
-			String nome = rs.getString("Nome");
-			Date dataMatricula = rs.getDate("data_matricula");
-			String endereco = rs.getString("endereco");
-			
-//			System.out.println(dataMatricula);
-			LocalDate dataMat = dataMatricula.toLocalDate();
-			
-			System.out.println(new AlunoJDBC(nome, dataMat, endereco));
-		}
+		alunos.forEach(System.out::println);
+		
+		AlunoJDBC aluno2 = alunoDao.buscar(4);
+		System.out.println("Achei " + aluno2);
 	}
 }
